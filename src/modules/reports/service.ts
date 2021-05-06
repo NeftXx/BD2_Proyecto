@@ -31,3 +31,8 @@ export const institutions = async() => {
   const results = await repository.institutions();
   return results;
 }
+
+export const transactionsByCui = async({ cui }) => {
+  const results = await repository.transactionsByCui({ cui });
+  return results;
+}

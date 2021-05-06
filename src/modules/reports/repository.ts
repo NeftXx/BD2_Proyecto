@@ -5,21 +5,27 @@ export const operationsByAnAccountHolder = async ({
   nombre,
   apellido,
 }) => {
-  const query = `
-select *
-from transacciones
-where
-cui = ? and
-nombre = ? and
-apellido = ?
-ALLOW FILTERING;
-`;
-  const result = await cassandra.execute(query, [cui, nombre, apellido]);
+  try {
+    console.log(cui, nombre, apellido);
+    const query = `
+  select *
+  from transacciones
+  where
+  cui = ? and
+  nombre = ? and
+  apellido = ?
+  ALLOW FILTERING;
+  `;
+    const result = await cassandra.execute(query, [cui, nombre, apellido]);
 
-  return result.rows;
+    return result.rows;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const totalCreditsAndDebitsByInstitution = async ({ institucion }) => {
+  console.log(institucion);
   const queryTotalCreditos = `
 select SUM(monto_transferido) AS creditos
 from transacciones
@@ -60,3 +66,9 @@ export const institutions = async () => {
   const results = await cassandra.execute(query);
   return results.rows;
 };
+
+export const transactionsByCui = async({ cui }) => {
+  const query = `select * from transacciones WHERE cui = '930849132' ALLOW FILTERING;`;
+  const results = await cassandra.execute(query);
+  return results.rows;
+}

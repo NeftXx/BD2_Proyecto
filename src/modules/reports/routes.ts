@@ -17,4 +17,6 @@ reportsRouter.post("/accounts", controller.accounts);
 
 reportsRouter.post("/institutions", controller.institutions);
 
+reportsRouter.post("/transactionsByCui", controller.transactionsByCui);
+
 export { reportsRouter };
